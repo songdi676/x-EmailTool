@@ -14,7 +14,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 @Slf4j
-public class Main extends Application {
+public class EmailToolMain extends Application {
     public static void main(String[] args) {
         try {
             launch(args);
@@ -25,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader fXMLLoader = Main.getFXMLLoader();
+        FXMLLoader fXMLLoader = EmailToolMain.getFXMLLoader();
         ResourceBundle resourceBundle = fXMLLoader.getResources();
         Parent root = fXMLLoader.load();
         primaryStage.setResizable(true);
