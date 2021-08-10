@@ -115,6 +115,7 @@ public class EmailToolController extends EmailToolView {
 
         JavaFxViewUtil.setSpinnerValueFactory(intervalSpinner, 60, Integer.MAX_VALUE);
         JavaFxViewUtil.setSpinnerValueFactory(repeatCountSpinner, -1, Integer.MAX_VALUE);
+        JavaFxViewUtil.setPasswordTextFieldFactory(passwordPasswordField);
     }
 
     private void initEvent() {

@@ -17,10 +17,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<AnchorPane prefHeight="530.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xwintop.xJavaFxTool.controller.littleTools.EmailToolController">
+<AnchorPane prefHeight="530.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.xwintop.xJavaFxTool.controller.littleTools.EmailToolController">
    <children>
       <BorderPane layoutX="14.0" layoutY="7.0" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
          <top>
@@ -57,7 +58,11 @@
                         <Label text="用户名：" />
                         <TextField fx:id="userNameTextField" text="xwintop@163.com" />
                         <Label text="密码：" />
-                        <PasswordField fx:id="passwordPasswordField" />
+                        <StackPane>
+                           <children>
+                              <PasswordField fx:id="passwordPasswordField" />
+                           </children>
+                        </StackPane>
                         <CheckBox fx:id="sslCheckBox" mnemonicParsing="false" selected="true" text="使用SSL" />
                      </children>
                   </HBox>
@@ -126,7 +131,7 @@
                         <TextField fx:id="SubjectTextField" text="Test Email" />
                      </children>
                   </HBox>
-                  <Label text="邮件内容：(可使用$(1)代替收件人邮件账号，${2}代替收件人昵称，分开发送时生效)" />
+                  <Label text="邮件内容：(可使用${1}代替收件人邮件账号，${2}代替收件人昵称，分开发送时生效)" />
                   <HTMLEditor fx:id="msgHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" />
                   <HBox alignment="CENTER_LEFT" spacing="5.0">
                      <children>

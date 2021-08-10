@@ -60,30 +60,9 @@ public class EmailToolService {
 
     public void runAction(EmailToolTableBean... emailToolTableBeans) {
         try {
-            HtmlEmail email = new HtmlEmail();
-            email.setHostName(emailToolController.getHostNameComboBox().getValue());
-            email.setSmtpPort(Integer.parseInt(emailToolController.getPortTextField().getText()));
-            email.setAuthentication(emailToolController.getUserNameTextField().getText(), emailToolController.getPasswordPasswordField().getText());
-            email.setSSLOnConnect(emailToolController.getSslCheckBox().isSelected());
-            email.setFrom(emailToolController.getUserNameTextField().getText());
-            email.setSubject(emailToolController.getSubjectTextField().getText());
-            email.setCharset("utf-8");
-            if (emailToolController.getAttachCheckBox().isSelected()) {
-                for (Map<String, String> map : emailToolController.getAttachPathTableData()) {
-                    EmailAttachment attachment = new EmailAttachment();
-                    attachment.setName(map.get("attachName"));
-                    String attachPath = map.get("attachPath");
-                    if (attachPath.startsWith("http")) {
-                        attachment.setURL(new URL(attachPath));//网络文件
-                    } else {
-                        attachment.setPath(attachPath);//本地文件
-                    }
-                    attachment.setDescription(map.get("attachDescription"));
-                    email.attach(attachment);
-                }
-            }
             if (emailToolController.getSentSeparatelyCheckBox().isSelected()) {
                 for (EmailToolTableBean emailToolTableBean : emailToolTableBeans) {
+                    HtmlEmail email = getHtmlEmail();
                     ArrayList<InternetAddress> toList = new ArrayList<InternetAddress>();
                     toList.add(new InternetAddress(emailToolTableBean.getToEmail(), emailToolTableBean.getToEmailName()));
                     email.setTo(toList);
@@ -94,6 +73,7 @@ public class EmailToolService {
                     email.send();
                 }
             } else {
+                HtmlEmail email = getHtmlEmail();
                 email.setHtmlMsg(emailToolController.getMsgHtmlEditor().getHtmlText());
                 for (EmailToolTableBean emailToolTableBean : emailToolTableBeans) {
                     email.addTo(emailToolTableBean.getToEmail(), emailToolTableBean.getToEmailName());
@@ -103,6 +83,32 @@ public class EmailToolService {
         } catch (Exception e) {
             log.error("email发送失败", e);
         }
+    }
+
+    private HtmlEmail getHtmlEmail() throws Exception {
+        HtmlEmail email = new HtmlEmail();
+        email.setHostName(emailToolController.getHostNameComboBox().getValue());
+        email.setSmtpPort(Integer.parseInt(emailToolController.getPortTextField().getText()));
+        email.setAuthentication(emailToolController.getUserNameTextField().getText(), emailToolController.getPasswordPasswordField().getText());
+        email.setSSLOnConnect(emailToolController.getSslCheckBox().isSelected());
+        email.setFrom(emailToolController.getUserNameTextField().getText());
+        email.setSubject(emailToolController.getSubjectTextField().getText());
+        email.setCharset("utf-8");
+        if (emailToolController.getAttachCheckBox().isSelected()) {
+            for (Map<String, String> map : emailToolController.getAttachPathTableData()) {
+                EmailAttachment attachment = new EmailAttachment();
+                attachment.setName(map.get("attachName"));
+                String attachPath = map.get("attachPath");
+                if (attachPath.startsWith("http")) {
+                    attachment.setURL(new URL(attachPath));//网络文件
+                } else {
+                    attachment.setPath(attachPath);//本地文件
+                }
+                attachment.setDescription(map.get("attachDescription"));
+                email.attach(attachment);
+            }
+        }
+        return email;
     }
 
     /**
